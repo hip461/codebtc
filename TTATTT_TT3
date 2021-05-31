@@ -1,10 +1,11 @@
 #include<stdio.h>
 #include<math.h>
+// tính modulo để tìm số dư
 int mod(int a, int b) {
 	int r = a%b;
 	return r<0 ? r + b : r;//r<0 gán r+b ngược lại gán r
 }
-
+// gán e trừ
 int ganETru(int a, int b, int e) {
 	if (a - b - e<0) {
 		return 1;
@@ -13,7 +14,7 @@ int ganETru(int a, int b, int e) {
 		return 0;
 	}
 }
-
+// tính số mũ của số lớn p
 int tinhSoMu(int a, int w) {
 	int ketQua = 1;
 	for (int i = 0; i<a*w; i++) {
@@ -21,7 +22,7 @@ int tinhSoMu(int a, int w) {
 	}
 	return ketQua;
 }
-
+// gán  e cộng 
 int ganECong(int a, int b, int e, int w) {
 	if (a + b + e >= tinhSoMu(1, w)) {
 		return 1;
@@ -30,7 +31,7 @@ int ganECong(int a, int b, int e, int w) {
 		return 0;
 	}
 }
-
+//tính c-p
 int tinhCtruP(int c[], int t, int p, int w) {
 	int m[1000];
 	int tg;
@@ -84,7 +85,7 @@ int kiemTraBit() {
 	} while (1);
 	return n;
 }
-
+// gán epsilon
 int ganE(int a, int b, int e, int w) {
 	if (a + b + e >= tinhSoMu(1, w)) {
 		return 1;
@@ -117,6 +118,7 @@ void tinh(int a[], int b[], int w, int t, int p) {
 		}
 	} while (1);
 }
+// thuật toán 3
 int main() {
 	int p, m, t, w;
 	printf("Nhap p");
