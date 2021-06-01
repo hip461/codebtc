@@ -1,0 +1,19 @@
+	// cộng dãy 1/n
+
+	#include <stdio.h>
+	int main() {
+		int n;
+		float sum = 0;
+		printf("nhap n phai lon hon 0: \t");
+		scanf("%d", &n);
+		if (n < 0){
+			printf("nhap lai n lon hon 0");
+		}
+		else {
+			for (int i = 1; i <= n; i++) {
+				sum += (float)1/i;
+			}
+			printf(" Tong cac so tu 1 den n: %f\n ", sum);
+		}
+		return 0;
+	}
