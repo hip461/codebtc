@@ -1,0 +1,18 @@
+	//tong cac so từ 1 đến n
+
+	#include <stdio.h>
+	int main() {
+		int n, sum=0;
+		printf("nhap n phai lon hon 0: \t");
+		scanf("%d", &n);
+		if (n < 0){
+			printf("nhap lai n lon hon 0");
+		}
+		else {
+			for (int i = 0; i <= n; i++) {
+				sum += i;
+			}
+			printf(" Tong cac so tu 1 den n: %d\n ", sum);
+		}
+		return 0;
+	}
