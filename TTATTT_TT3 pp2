@@ -1,0 +1,148 @@
+#include<stdio.h>
+#include<math.h>
+// tính modulo để tìm số dư
+long long mod(long long a, long long b) {
+	long long r = a%b;
+	return r<0 ? r + b : r;//r<0 gán r+b ngược lại gán r
+}
+// gán e trừ
+long long ganETru(long long a, long long b, long long e) {
+	if (a - b - e<0) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+// tính số mũ của số lớn p
+long long tinhSoMu(long long a, long long w) {
+	long long ketQua = 1;
+	for (long long i = 0; i<a*w; i++) {
+		ketQua = ketQua * 2;
+	}
+	return ketQua;
+}
+// gán  e cộng 
+long long ganECong(long long a, long long b, long long e, long long w) {
+	if (a + b + e >= tinhSoMu(1, w)) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+//tính c-p
+long long tinhCtruP(long long c[], long long t, long long p, long long w) {
+	long long m[1000];
+	long long tg;
+	for (long long i = t - 1; i >= 0; i--) {
+		if (i == t - 1) {
+			m[i] = (long long)p / tinhSoMu(i, w);
+			tg = p%tinhSoMu(i, w);
+		}
+		else {
+			m[i] = tg / tinhSoMu(i, w);
+			tg = p%tinhSoMu(i, w);
+		}
+	}
+	long long C[1000];
+	long long e = 0;
+	C[0] = mod((c[0] - m[0]), tinhSoMu(1, w));
+	e = ganETru(c[0], m[0], e);
+	for (long long i = 1; i<t; i++) {
+		C[i] = mod((c[i] - m[i] - e), tinhSoMu(1, w));
+		e = ganETru(c[i], m[i], e);
+	}
+	printf("\nepsilon =%lld\n", e);
+	printf("mang:");
+	for (long long i = t - 1; i >= 0; i--) {
+		printf("%lld ", C[i]);
+	}
+	return 0;
+}
+//nhập W cho phần dưới
+long long nhapW() {
+	long long w;
+	printf("Nhap  W(chia het 8):");
+	do {
+		scanf_s("%lld", &w);
+		if (w % 8 == 0) {
+			break;
+		}
+		printf("nhap lai:");
+	} while (1);
+	return w;
+}
+// gán epsilon
+long long ganE(long long a, long long b, long long e, long long w) {
+	if (a + b + e >= tinhSoMu(1, w)) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+void tinh(long long a[], long long b[], long long w, long long t, long long p) {
+	long long c[1000];
+	long long e = 0;
+	c[0] = mod((a[0] + b[0]), tinhSoMu(1, w));
+	e = ganECong(a[0], b[0], e, w);
+	for (long long i = 1; i<t; i++) {
+		c[i] = mod((a[i] + b[i] + e), tinhSoMu(1, w));
+		e = ganECong(a[i], b[i], e, w);
+	}
+	do {
+		if (e == 0) {
+			printf("\nepsilon =%lld\n", e);
+			printf("mang : ");
+			for (long long i = t - 1; i >= 0; i--) {
+				printf("[%lld]\t", c[i]);
+			}
+			break;
+		}
+		else {
+			tinhCtruP(c, t, p, w);
+			break;
+		}
+	} while (1);
+}
+// thuật toán 3
+int main() {
+	unsigned long long a, b, p, m, t, w;
+	printf("Nhap p");
+	scanf_s("%lld", &p);
+	w = nhapW();
+	m = ceil(log2(p));
+	t = ceil((double)m / w);
+	printf("Nhap mang A:\n");
+	scanf_s("%lld", &a);
+	long long A[1000];
+	long long h;
+	for (long long i = t - 1; i >= 0; i--) {
+		if (i == t - 1) {
+			A[i] = (long long)a / tinhSoMu(i, w);
+			h = a%tinhSoMu(i, w);
+		}
+		else {
+			A[i] = h / tinhSoMu(i, w);
+			h = a%tinhSoMu(i, w);
+		}
+		printf("[%lld]\t", A[i]);
+	}
+	printf("\nNhap mang B:\n");
+	scanf_s("%lld", &b);
+	long long B[1000];
+	long long l;
+	for (long long i = t - 1; i >= 0; i--) {
+		if (i == t - 1) {
+			B[i] = (long long)b / tinhSoMu(i, w);
+			l = b%tinhSoMu(i, w);
+		}
+		else {
+			B[i] = l / tinhSoMu(i, w);
+			l = b%tinhSoMu(i, w);
+		}
+		printf("[%lld]\t", B[i]);
+	}
+	tinh(A, B, w, t, p);
+}
